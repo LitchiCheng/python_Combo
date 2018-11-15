@@ -1,0 +1,17 @@
+missing module named resource - imported by posix, F:\code\py_soket-tool\src\py_soket-tool.py
+missing module named posix - imported by os, F:\code\py_soket-tool\src\py_soket-tool.py
+missing module named _posixsubprocess - imported by subprocess, F:\code\py_soket-tool\src\py_soket-tool.py
+missing module named org - imported by pickle, F:\code\py_soket-tool\src\py_soket-tool.py
+missing module named readline - imported by cmd, code, pdb, F:\code\py_soket-tool\src\py_soket-tool.py
+excluded module named _frozen_importlib - imported by importlib, importlib.abc, F:\code\py_soket-tool\src\py_soket-tool.py
+missing module named _frozen_importlib_external - imported by importlib._bootstrap, importlib, importlib.abc, F:\code\py_soket-tool\src\py_soket-tool.py
+missing module named _winreg - imported by platform, F:\code\py_soket-tool\src\py_soket-tool.py
+missing module named _scproxy - imported by urllib.request
+missing module named java - imported by platform, F:\code\py_soket-tool\src\py_soket-tool.py
+missing module named 'java.lang' - imported by platform, F:\code\py_soket-tool\src\py_soket-tool.py, xml.sax._exceptions
+missing module named vms_lib - imported by platform, F:\code\py_soket-tool\src\py_soket-tool.py
+missing module named termios - imported by tty, F:\code\py_soket-tool\src\py_soket-tool.py, getpass
+missing module named grp - imported by shutil, tarfile, F:\code\py_soket-tool\src\py_soket-tool.py
+missing module named 'org.python' - imported by copy, F:\code\py_soket-tool\src\py_soket-tool.py, xml.sax
+missing module named pwd - imported by posixpath, shutil, tarfile, http.server, webbrowser, F:\code\py_soket-tool\src\py_soket-tool.py, netrc, getpass
+missing module named _dummy_threading - imported by dummy_threading, F:\code\py_soket-tool\src\py_soket-tool.py
