@@ -7,9 +7,13 @@ import random
 # print(odd_random_list)
 
 def returnOddIntListOfRandom(range_start, range_end, quantity):
+    '''
+    the function is to return a list of random odd integer
+    '''
     odd_random_list = [0] * quantity
     odd_random_list = random.sample([i for i in range(100) if i % 2 == 1], 12)
     return odd_random_list  
 
-while(1):
-    print(returnOddIntListOfRandom(0,100,12))
+# while(1):
+#     print(returnOddIntListOfRandom(0,100,12))
+help(returnOddIntListOfRandom)
