@@ -9,14 +9,15 @@ class Person:
         self.age = age 
     def say(self, content):          #定义了一个方法
         print(content)
-    
+'''   
 p = Person()
-# print(p.name, p.age)
-# p.name = 'gaoxiao'
-# print(p.hair)
-# p.say('sfdasdfa')
-# w = Person()
-# print(w.hair)
+print(p.name, p.age)
+p.name = 'gaoxiao'
+print(p.hair)
+p.say('sfdasdfa')
+w = Person()
+print(w.hair)
+'''
 
 '''
 python是动态语言，可以动态删除增加实例变量，也可以动态增加方法，不过有区别
@@ -94,12 +95,13 @@ class ClassVarAndInstanceVar:
     def info(self, temp1):
         print(self.temp1)
         self.temp1 = temp1      #不影响temp1类变量，等于新的实例变量
-
-# print(ClassVarAndInstanceVar.temp1)
-# class_var = ClassVarAndInstanceVar()
-# class_var.info('ggg')
-# print(class_var.temp1)
-# print(ClassVarAndInstanceVar.temp1)
+'''
+print(ClassVarAndInstanceVar.temp1)
+class_var = ClassVarAndInstanceVar()
+class_var.info('ggg')
+print(class_var.temp1)
+print(ClassVarAndInstanceVar.temp1)
+'''
 
 '''
 property函数定义属性
@@ -117,12 +119,106 @@ class Rectangle:
     def delSize(self):
         self.width,self.height =0,0
     size = property(getSize, setSize, delSize, '描述矩形大小的属性')
+'''
+print(Rectangle.size.__doc__)   #访问size属性的说明文档
+help(Rectangle.size)            #用help方法访问
+rect = Rectangle(12,32)
+print(rect.size)        #返回的是getSize的返回值
+rect.size = 32,43           #赋值的是setSize
+print(rect.height)
+del rect.size                #调用的是delSize
+print(rect.width)
+'''
 
-# print(Rectangle.size.__doc__)   #访问size属性的说明文档
-# help(Rectangle.size)            #用help方法访问
-# rect = Rectangle(12,32)
-# print(rect.size)        #返回的是getSize的返回值
-# rect.size = 32,43           #赋值的是setSize
-# print(rect.height)
-# del rect.size                #调用的是delSize
-# print(rect.width)
+'''
+将该隐藏的隐藏，该暴露的暴露，python类的成员命名为以双下划线开头的，
+python就会将他们隐藏起来,python并没有实现真正的隐藏
+'''
+class User:
+    def __hide(self):
+        print("隐藏的方法")
+    def getName(self):
+        return self.__name
+    def setName(self, name):
+        if len(name) < 3 or len(name) > 8:
+            raise ValueError("用户名长度必须在3~8之间")
+        self.__name = name
+    name = property(getName, setName)
+    def setAge(self, age):
+        if age < 18 or age > 70:
+            raise ValueError("用户名年龄必须在18~70之间")
+        self.__age = age
+    def getAge(self):
+        return self.__age
+    age = property(getAge, setAge)
+'''
+user1 = User()
+#user1.name = 'sd'       #ValueError: 用户名长度必须在3~8之间
+user1.setAge(56)
+print(user1.age)
+#user1.__hide()          #AttributeError: 'User' object has no attribute '__hide'
+user1._User__hide()   #python会在双下划线开头的方法名和实例变量前加单下划线加类名，所以调用要这样调用
+user1._User__name = 'sg'       #绕过setName的判断逻辑
+print(user1.getName())
+'''
+
+'''
+类的继承,class SubClass(SuperClass1, SuperClass2, ...)
+'''
+class Fruit:
+    def info(self):
+        print("我是一个水果，重%g克" % self.weight)
+
+class Food:
+    def taste(self):
+        print("食物口感不错")
+
+class Apple(Fruit, Food):
+    pass
+'''
+apple = Apple()
+apple.info()       #AttributeError: 'Apple' object has no attribute 'weight'
+apple.weight = 2.4
+apple.info()
+apple.taste()
+'''
+
+'''
+重写父类的方法，子类是一种特殊的父类，以父类为基础，额外的增加新的方法
+子类也需要重写父类的方法。
+'''
+
+class Father:
+    def info(self):
+        print("dfsdfsd")
+class Son(Father):
+    def info(self):             # override重写父类的方法，也称方法覆盖
+        print('i use my method')
+'''
+son = Son()
+son.info()
+'''
+
+'''
+使用super函数调用父类的构造方法
+'''
+class Employee:
+    def __init__(self, salary):
+        self.salary = salary
+    
+class Customer:
+    def __init__(self, favorite, address):
+        self.favorite = favorite
+        self.address = address
+
+class Manager(Employee, Customer):         #构造函数将使用排在最前面的父类的构造函数
+    def __init__(self, salary, favorite, address):
+        super().__init__(salary)        #使用super()调用父类的构造函数
+        Customer.__init__(self, favorite, address)  #使用未绑定方法调用构造函数
+    pass
+
+'''
+manager = Manager(1231, 32, 234)
+print(manager.salary)
+print(manager.favorite)
+'''
