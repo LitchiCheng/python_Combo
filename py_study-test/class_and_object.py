@@ -9,8 +9,9 @@ class Person:
         self.age = age 
     def say(self, content):          #定义了一个方法
         print(content)
-'''   
+  
 p = Person()
+'''
 print(p.name, p.age)
 p.name = 'gaoxiao'
 print(p.hair)
@@ -222,3 +223,52 @@ manager = Manager(1231, 32, 234)
 print(manager.salary)
 print(manager.favorite)
 '''
+
+'''
+类的多态
+'''
+class Canvas:               #类似一个工厂
+    def draw_pic(self, shape):
+        print("开始绘画")
+        shape.draw(self)
+class Rectangle1:
+    def draw(self):
+        print('矩形')
+class Triangle:
+    def draw(self):
+        print('三角形')
+class Circle:
+    def draw(self):
+        print('⚪')
+
+# canvas = Canvas()
+# canvas.draw_pic(Rectangle)
+
+'''
+检查类型，检查完是类还是实例对象, isinstance, issubclass, 返回的是布尔量
+__bases__属性，可以查看该类的所有直接父类，返回的是元组
+__subclasses__()方法可以查看该类的所有直接子类，返回的是列表
+'''
+hello = 'Hello'
+# print('hello 是否是str类的实例 ', isinstance(hello, str))
+class A:
+    pass
+class B:
+    pass
+class C(A, B):
+    pass
+# print(A.__bases__)
+# print(C.__bases__)
+# print(A.__subclasses__())
+
+'''
+枚举类
+实例有限且固定的类，称为枚举类
+1.直接通过Enum列出多个枚举值来创建枚举类
+2.通过继承Enum基类列出多个枚举值来创建枚举类
+'''
+import enum
+# Season = enum.Enum(Season, ('SPRING','SUMMER', 'FALL', 'WINTER'))   #has some problem
+# print(Season.SPRING)
+
+
