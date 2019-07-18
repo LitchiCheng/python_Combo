@@ -89,13 +89,13 @@ class Ui_MainWindow(object):
         self.query_pb.setText(_translate("MainWindow", "query"))
         self.total_num.setText(_translate("MainWindow", "total:"))
         self.keyword.setText(_translate("MainWindow", "keyword"))
-        self.lineEdit.setText(_translate("MainWindow", "输入关键词"))
+        self.lineEdit.setText(_translate("MainWindow", ""))
         self.text.setText(_translate("MainWindow", "text"))
         self.insert_pb.setText(_translate("MainWindow", "save"))
 
     def insertPB(self):
         text_name = self.lineEdit.text()
-        key_word_file = self.dictionary_file + "\\\\" + text_name + ".txt"
+        key_word_file = self.dictionary_file + "\\\\" + text_name + ".md"
         file = open(key_word_file,'w+', encoding='utf-8')
         # print(self.plainTextEdit.toPlainText())
         file.write(self.plainTextEdit.toPlainText())
@@ -118,11 +118,20 @@ class Ui_MainWindow(object):
         filenames=os.listdir(address)
         for filename in filenames:
             filepath = address+'\\'+filename
-            document = docx.opendocx(filepath)  #打开文件demo.docx
-            docx_lines = docx.getdocumenttext(document)
-            docx_lines_num = len(docx_lines)
+            ext = os.path.splitext(filepath)[1]
+            if ext == ".docx":
+                document = docx.opendocx(filepath)  #打开文件demo.docx
+                docx_lines = docx.getdocumenttext(document)
+                docx_lines_num = len(docx_lines)
+            elif ext == ".md":
+                document = open(filepath,'r',encoding = "utf-8")  #打开文件demo.docx
+                docx_lines = document.readlines()
+                docx_lines_num = len(docx_lines)
+                print(docx_lines_num)
+            last_head = 0
+            last_tail = 0
             for index,line in enumerate(docx_lines):
-                if self.lineEdit.text() in line:
+                if self.lineEdit.text() in line or self.lineEdit.text().capitalize() in line:
                     # print(line)
                     string = []
                     string.append("文件位置：" + filepath + "\n")
@@ -139,16 +148,20 @@ class Ui_MainWindow(object):
                             # print("来源尾：" + str(now_index_tail))
                             break
                         if now_index_tail == (docx_lines_num -1):
-                            # print("来源尾：" + str(now_index_tail))
+                            # print("来源尾1：" + str(now_index_tail))
+                            now_index_tail = now_index_tail + 1
                             break
-                    for i in docx_lines[now_index_head:now_index_tail]:
-                        # print(i)
-                        string.append(i + "\n")
-                    # print("\n")
-                    string.append("\n")
-                    print("".join(string))
-                    # self.plainTextEdit.append("".join(string))
-                    self.plainTextEdit.appendPlainText("".join(string))
+                    if (last_head != now_index_head) or (last_tail != now_index_tail):
+                        last_head = now_index_head
+                        last_tail = now_index_tail
+                        for i in docx_lines[now_index_head:now_index_tail]:
+                            #print(i)
+                            string.append(i + "\n")
+                        #print("\n")
+                        string.append("\n")
+                        #print("".join(string))
+                        # self.plainTextEdit.append("".join(string))
+                        self.plainTextEdit.appendPlainText("".join(string))
 
 class MyMainWindow(Ui_MainWindow):
     def __init__(self):
