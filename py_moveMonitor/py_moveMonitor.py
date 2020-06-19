@@ -19,10 +19,7 @@ class moveMonitor:
 			self.last_cnt = encoder_cnt
 			return False
 		
-		# //data filter.
-		# //give up encoder data with large noise.
 		if(math.fabs(encoder_cnt - self.last_cnt) > 2000000):
-			# Message::Instance()->postMsg("encoder of driver%d value jumps too large : %d !!!", _canID, _encoderCnt);
 			self.last_cnt = encoder_cnt
 			return False
 		
@@ -59,7 +56,7 @@ class moveMonitor:
 
 			if self.stop_cycle >= 20:
 				self.is_stop = True
-
+		# print("is stop is %d, is moving is %d" % (self.is_stop, self.is_moving))
 		return (self.is_stop and (not self.is_moving))
 
 
@@ -85,7 +82,20 @@ class calcCriticalWalk(calcCriticalBase):
 		self.critical_window = self.getCritical() * 5.0
 		return self.critical_window 
 
+import re
 if __name__ == "__main__":
-    tt = calcCriticalWalk(8000.0, 20.0, 0.09)
-    print(tt.getCritical())
-    print(tt.getCriticalWindow())
+	tt = calcCriticalWalk(8000.0, 20.0, 0.09)
+	print(tt.getCritical())
+	print(tt.getCriticalWindow())
+	cc = moveMonitor(tt.getCritical(),tt.getCriticalWindow())
+	x = open("D:/out-result.txt", "r")
+	for i in x:
+		data_arry = re.split("[|\n]", i)
+		# print(data_arry[11])
+		# print(re.split("]",data_arry[12])[0])
+		xx = re.split("]",data_arry[12])[0]
+		v = cc.update(float(xx))
+		print(v)
+
+	print(tt.getCritical())
+	print(tt.getCriticalWindow())
