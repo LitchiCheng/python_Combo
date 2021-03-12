@@ -80,22 +80,31 @@ class calcCriticalWalk(calcCriticalBase):
 
 	def getCriticalWindow(self):
 		self.critical_window = self.getCritical() * 5.0
-		return self.critical_window 
+		return self.critical_window
+
+class calcCriticalFork(calcCriticalBase):
+	def getCritical(self):
+		self.critical = 1.1
+		return self.critical
+
+	def getCriticalWindow(self):
+		self.critical_window = self.getCritical() * 5.0
+		return self.critical_window  
 
 import re
 if __name__ == "__main__":
-	tt = calcCriticalWalk(8000.0, 20.0, 0.09)
+	tt = calcCriticalFork(8000.0, 20.0, 0.09)
 	print(tt.getCritical())
 	print(tt.getCriticalWindow())
 	cc = moveMonitor(tt.getCritical(),tt.getCriticalWindow())
 	x = open("D:/out-result.txt", "r")
 	for i in x:
 		data_arry = re.split("[|\n]", i)
-		# print(data_arry[11])
-		# print(re.split("]",data_arry[12])[0])
-		xx = re.split("]",data_arry[12])[0]
+		# print(data_arry)
+		# break
+		xx = re.split("]",data_arry[14])[0]
 		v = cc.update(float(xx))
-		print(v)
+		print(v,end="")
 
 	print(tt.getCritical())
 	print(tt.getCriticalWindow())
