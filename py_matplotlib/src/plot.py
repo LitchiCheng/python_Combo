@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm        #字体管理器
+import cv2
 #my_font = fm.FontProperties(fname="C:\Windows\Fonts\msyh.ttf")          #中文字体路径
 x_data = ['2012', '2013']
 y_data1 = [5699, 2323]          #param of plot should be list
